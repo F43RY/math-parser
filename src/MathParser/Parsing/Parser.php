@@ -272,8 +272,12 @@ class Parser
 
         $right = $this->operandStack->pop();
         $left = $this->operandStack->pop();
-        $right = ($right === null) ? 0 : $right;
-        $left = ($left === null) ? 0 : $left;
+        
+        if ($node->getOperator() == '|'){
+            $right = ($right === null) ? 0 : $right;
+            $left = ($left === null) ? 0 : $left;
+        }    
+        
         if ($right === null || $left === null) {
             throw new SyntaxErrorException();
         }
