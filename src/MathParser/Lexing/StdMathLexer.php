@@ -120,6 +120,7 @@ class StdMathLexer extends Lexer
         $this->add(new TokenDefinition('/\*/', TokenType::MultiplicationOperator));
         $this->add(new TokenDefinition('/\//', TokenType::DivisionOperator));
         $this->add(new TokenDefinition('/\^/', TokenType::ExponentiationOperator));
+        $this->add(new TokenDefinition('/\|/', TokenType::PipeOperator));
 
         // Postfix operators
         $this->add(new TokenDefinition('/\!\!/', TokenType::SemiFactorialOperator));
