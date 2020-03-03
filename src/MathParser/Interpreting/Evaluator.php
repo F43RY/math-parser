@@ -123,7 +123,10 @@ class Evaluator implements Visitor
                 } else {
                     return pow($leftValue, $rightValue);
                 }
-
+            case "|":
+                $rightValue = ($rightValue === null) ? 0 : $rightValue;
+                $rightValue = ($leftValue === null) ? 0 : $leftValue;
+                return $rightValue + $leftValue;
             default:
                 throw new UnknownOperatorException($operator);
         }
