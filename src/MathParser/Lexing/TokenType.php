@@ -67,6 +67,9 @@ final class TokenType
     /** Token representing postfix subfactorial operator '!!' */
     const SemiFactorialOperator = 105;
 
+    /** Token representing pipe operator '|' */
+    const PipeOperator = 106;
+    
     /** Token represented a function name, e.g. 'sin' */
     const FunctionName = 200;
 
