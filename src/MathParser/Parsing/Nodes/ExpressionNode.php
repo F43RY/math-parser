@@ -98,7 +98,7 @@ class ExpressionNode extends Node
 
             case '|':
                 $this->precedence = 10;
-                $this->associativity = self::RIGHT_ASSOC;
+                $this->associativity = self::LEFT_ASSOC;
                 break;
 
             default:
