@@ -78,7 +78,7 @@ class Lexer
 
         // The currentIndex indicates where we are inside the input string
         $currentIndex = 0;
-
+        
         while ($currentIndex < strlen($input)) {
             // We try to match only what is after the currentIndex,
             // as the content before is already converted to tokens

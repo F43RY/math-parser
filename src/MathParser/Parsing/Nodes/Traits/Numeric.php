@@ -15,6 +15,7 @@ namespace MathParser\Parsing\Nodes\Traits;
 
 use MathParser\Parsing\Nodes\Node;
 use MathParser\Parsing\Nodes\NumberNode;
+use MathParser\Parsing\Nodes\NullNode;
 use MathParser\Parsing\Nodes\IntegerNode;
 use MathParser\Parsing\Nodes\RationalNode;
 
@@ -31,12 +32,20 @@ trait Numeric {
 
     }
 
+    protected function isNull($operand)
+    {
+        return ($operand instanceof NullNode);
+        
+    }
+    
+    
     protected function orderType($node)
     {
+        if ($node instanceof NullNode) return Node::NumericNull;
         if ($node instanceof IntegerNode) return Node::NumericInteger;
         if ($node instanceof RationalNode) return Node::NumericRational;
         if ($node instanceof NumberNode) return Node::NumericFloat;
-
+        
         return 0;
     }
     protected function resultingType($node, $other)

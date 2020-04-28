@@ -16,6 +16,7 @@ namespace MathParser\Parsing\Nodes\Traits;
 use MathParser\Parsing\Nodes\NumberNode;
 use MathParser\Parsing\Nodes\IntegerNode;
 use MathParser\Parsing\Nodes\RationalNode;
+use MathParser\Parsing\Nodes\NullNode;
 
 /**
  * Trait for upgrading numbers (ints and floats) to NumberNode,
@@ -34,6 +35,7 @@ trait Sanitize {
     {
         if (is_int($operand)) return new IntegerNode($operand);
         if (is_float($operand)) return new NumberNode($operand);
+        if (is_null($operand)) return new NullNode($operand);
 
         return $operand;
     }

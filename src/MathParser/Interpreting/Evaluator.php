@@ -21,6 +21,7 @@ use MathParser\Parsing\Nodes\FunctionNode;
 use MathParser\Parsing\Nodes\IntegerNode;
 use MathParser\Parsing\Nodes\Node;
 use MathParser\Parsing\Nodes\NumberNode;
+use MathParser\Parsing\Nodes\NullNode;
 use MathParser\Parsing\Nodes\RationalNode;
 use MathParser\Parsing\Nodes\VariableNode;
 
@@ -103,7 +104,11 @@ class Evaluator implements Visitor
         // Perform the right operation based on the operator
         switch ($operator) {
             case '+':
-                return $leftValue + $rightValue;
+                if(is_null($leftValue) || is_null($rightValue)){
+                    return null;
+                }else{
+                    return $leftValue + $rightValue;
+                }
             case '-':
                 return $rightValue === null ? -$leftValue : $leftValue - $rightValue;
             case '*':
@@ -112,7 +117,9 @@ class Evaluator implements Visitor
                 if ($rightValue == 0) {
                     throw new DivisionByZeroException();
                 }
-
+                if (is_null($leftValue)) {
+                    return null;
+                }
                 return $leftValue / $rightValue;
             case '^':
                 // Check for base equal to M_E, to take care of PHP's strange
@@ -125,7 +132,7 @@ class Evaluator implements Visitor
                 }
             case "|":
                 $rightValue = ($rightValue === null) ? 0 : $rightValue;
-                $rightValue = ($leftValue === null) ? 0 : $leftValue;
+                $leftValue = ($leftValue === null) ? 0 : $leftValue;
                 return $rightValue + $leftValue;
             default:
                 throw new UnknownOperatorException($operator);
@@ -151,6 +158,19 @@ class Evaluator implements Visitor
     }
 
     public function visitRationalNode(RationalNode $node)
+    {
+        return $node->getValue();
+    }
+    
+    /**
+     * Evaluate a NullNode
+     *
+     * Retuns the value of an NullNode
+     *
+     * @retval null
+     * @param NullNode $node AST to be evaluated
+     */
+    public function visitNullNode(NullNode $node)
     {
         return $node->getValue();
     }

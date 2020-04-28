@@ -131,7 +131,8 @@ class StdMathLexer extends Lexer
         $this->add(new TokenDefinition('/NAN/', TokenType::Constant));
         $this->add(new TokenDefinition('/INF/', TokenType::Constant));
 
-        $this->add(new TokenDefinition('/[a-zA-Z]/', TokenType::Identifier));
+//         $this->add(new TokenDefinition('/[a-zA-Z]/', TokenType::Identifier));
+        $this->add(new TokenDefinition('/[a-zA-Z_0-9]+/', TokenType::Identifier));
 
         $this->add(new TokenDefinition('/\n/', TokenType::Terminator));
         $this->add(new TokenDefinition('/\s+/', TokenType::Whitespace));

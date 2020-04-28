@@ -27,6 +27,7 @@ use MathParser\Lexing\TokenType;
  */
 abstract class Node implements Visitable
 {
+    const NumericNull = 0;
     const NumericInteger = 1;
     const NumericRational = 2;
     const NumericFloat = 3;
@@ -67,6 +68,7 @@ abstract class Node implements Visitable
             case TokenType::SubtractionOperator:
             case TokenType::MultiplicationOperator:
             case TokenType::DivisionOperator:
+            case TokenType::PipeOperator:
             case TokenType::ExponentiationOperator:
                 return new ExpressionNode(null, $token->getValue(), null);
 
@@ -115,6 +117,7 @@ abstract class Node implements Visitable
             case TokenType::SubtractionOperator:
             case TokenType::MultiplicationOperator:
             case TokenType::DivisionOperator:
+            case TokenType::PipeOperator:
             case TokenType::ExponentiationOperator:
                 return new ExpressionNode(null, $token->getValue(), null);
 

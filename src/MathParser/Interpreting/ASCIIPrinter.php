@@ -71,7 +71,6 @@ class ASCIIPrinter implements Visitor
         $operator = $node->getOperator();
         $left = $node->getLeft();
         $right = $node->getRight();
-
         switch ($operator) {
             case '+':
                 $leftValue = $left->accept($this);

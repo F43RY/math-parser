@@ -1,23 +1,22 @@
 
 <?php
 
-use MathParser\Lexing\Lexer;
+// use MathParser\Lexing\Lexer;
 use MathParser\Lexing\StdMathLexer;
-use MathParser\Lexing\TokenDefinition;
-use MathParser\Lexing\TokenType;
+// use MathParser\Lexing\TokenDefinition;
+// use MathParser\Lexing\TokenType;
 use MathParser\Parsing\Parser;
-use MathParser\Interpreting\TreePrinter;
-use MathParser\Interpreting\LaTeXPrinter;
-use MathParser\Interpreting\ASCIIPrinter;
-use MathParser\Interpreting\Differentiator;
+// use MathParser\Interpreting\TreePrinter;
+// use MathParser\Interpreting\LaTeXPrinter;
+// use MathParser\Interpreting\ASCIIPrinter;
+// use MathParser\Interpreting\Differentiator;
 use MathParser\Interpreting\Evaluator;
-use MathParser\Interpreting\RationalEvaluator;
+// use MathParser\Interpreting\RationalEvaluator;
 
 use MathParser\StdMathParser;
-use MathParser\RationalMathParser;
+// use MathParser\RationalMathParser;
 
 include '../vendor/autoload.php';
-
 
 class ParserWithoutImplicitMultiplication extends Parser {
     protected static function allowImplicitMultiplication() {
@@ -25,16 +24,37 @@ class ParserWithoutImplicitMultiplication extends Parser {
     }
 }
 
-// $lexer = new StdMathLexer();
-// $tokens = $lexer->tokenize($argv[1]);
-//
-// $parser = new ParserWithoutImplicitMultiplication();
-// $tree = $parser->parse($tokens);
-//
-// $treeprinter = new TreePrinter();
-// var_dump($tree->accept($treeprinter));
-//
-// die();
+
+$lexer  = new StdMathLexer();
+$tokens = $lexer->tokenize("(xlfa+y)/gg");
+
+//$parser = new StdMathParser();
+$parser = new ParserWithoutImplicitMultiplication();
+// Generate an abstract syntax tree
+$AST = $parser->parse($tokens);
+
+$evaluator = new Evaluator();
+$evaluator->setVariables([ 'xlfa' => null, 'y' => 3, 'gg' => 3 ]);
+// Do something with the AST, e.g. evaluate the expression:
+
+
+$value = $AST->accept($evaluator);
+echo $value;
+die();
+
+
+
+
+$lexer = new StdMathLexer();
+$tokens = $lexer->tokenize($argv[1]);
+
+$parser = new ParserWithoutImplicitMultiplication();
+$tree = $parser->parse($tokens);
+
+$treeprinter = new TreePrinter();
+var_dump($tree->accept($treeprinter));
+
+die();
 
 
 $parser = new RationalMathParser();

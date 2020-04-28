@@ -64,7 +64,7 @@ class ExpressionNode extends Node
         $this->left = $this->sanitize($left);
         $this->operator = $operator;
         $this->right = $this->sanitize($right);
-
+        
         switch($operator) {
             case '+':
                 $this->precedence = 10;
@@ -192,7 +192,7 @@ class ExpressionNode extends Node
      */
     public function canBeUnary()
     {
-        return $this->operator == '+' || $this->operator == '-' || $this->operator == '~';
+        return $this->operator == '+' || $this->operator == '-' || $this->operator == '~' ;
     }
 
     /**

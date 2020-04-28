@@ -119,7 +119,6 @@ class Parser
         }
 
         $this->tokens = $tokens;
-
         // Perform the actual parsing
         return $this->shuntingYard($tokens);
     }
@@ -148,9 +147,9 @@ class Parser
         {
             $token = $tokens[$index];
 
-            // echo "current token $token\n";
-            // echo("operands:" . $this->operandStack . "\n");
-            // echo("operators: " . $this->operatorStack . "\n\n");
+//              echo "current token $token\n";
+//              echo("operands:" . $this->operandStack . "\n");
+//              echo("operators: " . $this->operatorStack . "\n\n");
 
             if ($this->rationalFactory) {
                 $node = Node::rationalFactory($token);
@@ -333,7 +332,6 @@ class Parser
         $filteredTokens = array_filter($tokens, function (Token $t) {
             return $t->getType() !== TokenType::Whitespace;
         });
-
         // Return the array values only, because array_filter preserves the keys
         return array_values($filteredTokens);
     }

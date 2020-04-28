@@ -4,7 +4,7 @@
 * @author      Frank Wikström <frank@mossadal.se>
 * @copyright   2015 Frank Wikström
 * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
-*
+* 
 */
 
 /** @namespace MathParser::Parsing::Nodes::Factories
@@ -20,6 +20,7 @@ use MathParser\Parsing\Nodes\Factories\SubtractionNodeFactory;
 use MathParser\Parsing\Nodes\Factories\MultiplicationNodeFactory;
 use MathParser\Parsing\Nodes\Factories\DivisionNodeFactory;
 use MathParser\Parsing\Nodes\Factories\ExponentiationNodeFactory;
+use MathParser\Parsing\Nodes\Factories\PipeNodeFactory;
 use MathParser\Parsing\Nodes\Factories\UnaryMinusNodeFactory;
 use MathParser\Parsing\Nodes\ExpressionNode;
 
@@ -74,10 +75,17 @@ class NodeFactory {
      * @var ExponentiationNodeFactory $exponentiationFactory;
      **/
     protected $exponentiationFactory;
-
+    /**
+     * Factory for creating piped nodes
+     *
+     * @var PipeNodeFactory $pipeFactory;
+     **/
+    protected $pipeFactory;
+    
     /**
      * Constructor
      */
+    
     public function __construct()
     {
         $this->additionFactory = new AdditionNodeFactory();
@@ -85,6 +93,7 @@ class NodeFactory {
         $this->multiplicationFactory = new MultiplicationNodeFactory();
         $this->divisionFactory = new DivisionNodeFactory();
         $this->exponentiationFactory = new ExponentiationNodeFactory();
+        $this->pipeFactory = new PipeNodeFactory();
     }
 
     /**
@@ -163,6 +172,19 @@ class NodeFactory {
     {
         return $this->subtractionFactory->createUnaryMinusNode($operand);
     }
+    
+    /**
+     * Create a pipe node representing '$leftOperand | $rightOperand'.
+     *
+     * @param mixed $leftOperand
+     * @param mixed $rightOperand
+     * @retval ExpressionNode
+     *
+     */
+    public function pipe($leftOperand, $rightOperand)
+    {
+        return $this->pipeFactory->makeNode($leftOperand, $rightOperand);
+    }
 
     /**
      * Simplify the given ExpressionNode, using the appropriate factory.
@@ -178,6 +200,7 @@ class NodeFactory {
             case '*': return $this->multiplication($node->getLeft(), $node->getRight());
             case '/': return $this->division($node->getLeft(), $node->getRight());
             case '^': return $this->exponentiation($node->getLeft(), $node->getRight());
+            case '|': return $this->pipe($node->getLeft(), $node->getRight());
         }
     }
 
